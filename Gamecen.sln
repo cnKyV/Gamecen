@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lib.RiotGames.Infrastructure", "Lib.RiotGames\Lib.RiotGames.Infrastructure.csproj", "{AEB06BE9-B1CC-4F98-B6B7-5DB0CB0A8FF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Lib.RiotGames\Infrastructure.csproj", "{AEB06BE9-B1CC-4F98-B6B7-5DB0CB0A8FF2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.RiotGames.Core", "Lib.RiotGames.Core\Lib.RiotGames.Core.csproj", "{B72F39AC-224C-4AB3-887D-D0168A44385A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Lib.RiotGames.Core\Core.csproj", "{B72F39AC-224C-4AB3-887D-D0168A44385A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lib.RiotGames.Tests", "Lib.RiotGames.Tests\Lib.RiotGames.Tests.csproj", "{86359600-CA2D-4491-ABB1-3FCB841DC33C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gamecen.Tests", "Lib.RiotGames.Tests\Gamecen.Tests.csproj", "{86359600-CA2D-4491-ABB1-3FCB841DC33C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{61FD6A58-2ACF-4E0B-A686-76A0791E09EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{61FD6A58-2ACF-4E0B-A686-76A0791E09EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

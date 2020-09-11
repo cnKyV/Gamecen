@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lib.RiotGames.Core.Entities.RequestModels
 {
-    public class AccountRequestModel
+    public class RiotAccountRequestModel
     {
         public string Puuid { get; set; }
         public string GameName { get; set; }
