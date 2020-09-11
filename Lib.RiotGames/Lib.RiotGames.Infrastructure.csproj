@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="League Of Legends\" />
+    <Folder Include="Repositories\" />
+    <Folder Include="Riot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lib.RiotGames.Core\Lib.RiotGames.Core.csproj" />
+  </ItemGroup>
+
+</Project>
