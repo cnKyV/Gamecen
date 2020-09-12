@@ -31,40 +31,57 @@ namespace Lib.RiotGames.Riot
         la2
         }
         private static string _apiKey;
-        private static readonly RiotAccountRequestModel _riotAccountRequestModel;
-        private static readonly RiotSummonerRequestModel riotSummonerRequestModel;
-
         public static string ApiKey
         {
             set { _apiKey = value; }
         }
 
-        public static async Task<RiotApiInitializerResponseModel> InitializeRiotApiByTagName(ApiRegion apiRegion, string gameName, string tagName)
+        public static async IAsyncEnumerable<RiotApiInitializerResponseModel> InitializeRiotApiByTagName(ApiRegion apiRegion, string gameName, string tagName)
         {
-            HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("X-Riot-Token", _apiKey);
-           var resultAccount = await httpClient.GetAsync($"https://{apiRegion}.api.riotgames.com/riot/account/v1/accounts/by-puuid/8OvBFEtIP3IvXa6gJCN-39kP197LJQsUI15sKbT-LBp8Jz4sJ9nlMwXdy2wJym0eiOm-etnLAOcpcA");
-            var contentAccount = await resultAccount.Content.ReadAsStringAsync();
-            var initializedSummonerModel = JsonConvert.DeserializeObject<RiotAccountRequestModel>(contentAccount);
-            return new RiotApiInitializerResponseModel();
+            var riotAccountModel = await InitializeRiotAccount(apiRegion, gameName, tagName);
+            await foreach (var riotSummoner in InitializeRiotSummoner(riotAccountModel))
+            {
+                
+            }
+                
+            
         }
         public static async Task<RiotApiInitializerResponseModel> InitializeRiotApiBySummonerName(SummonerRegion summonerRegion, string summonerName)
         {
+            var riotAccountModel = await InitializeRiotAccount(summonerName, summonerRegion);
             return new RiotApiInitializerResponseModel();
         }
-        private static async Task<RiotAccountRequestModel> InitializeRiotAccount()  
+        private static async Task<RiotAccountRequestModel> InitializeRiotAccount(ApiRegion apiRegion, string gameName, string tagName)  
         {
-            return new RiotAccountRequestModel();
-        }
-        private static async Task<RiotSummonerRequestModel> InitializeRiotSummoner()
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("X-Riot-Token", _apiKey);
+            var resultAccount = await httpClient.GetAsync($"https://{apiRegion}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/{gameName}/{tagName}");
+            var contentAccount = await resultAccount.Content.ReadAsStringAsync();
+            var initializedSummonerModel = JsonConvert.DeserializeObject<RiotAccountRequestModel>(contentAccount);
+            return initializedSummonerModel;
+        }        
+        private static async Task<RiotSummonerRequestModel> InitializeRiotAccount(string summonerName,SummonerRegion summonerRegion)  
         {
-            return new RiotSummonerRequestModel();
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("X-Riot-Token", _apiKey);
+            var resultAccount = await httpClient.GetAsync($"https://{summonerRegion}.api.riotgames.com/lol/summoner/v4/summoners/{summonerName}/");
+            var contentAccount = await resultAccount.Content.ReadAsStringAsync();
+            var initializedSummonerModel = JsonConvert.DeserializeObject<RiotSummonerRequestModel>(contentAccount);
+            return initializedSummonerModel;
+        }   
+        private static async IAsyncEnumerable<RiotSummonerRequestModel> InitializeRiotSummoner(RiotAccountRequestModel riotAccount)
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("X-Riot-Token", _apiKey);
+            foreach (var region in Enum.GetValues(typeof(SummonerRegion)))
+            {
+                var resultAccount = await httpClient.GetAsync($"https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{riotAccount.Puuid}/");
+                var contentAccount = await resultAccount.Content.ReadAsStringAsync();
+                var initializedSummonerModel = JsonConvert.DeserializeObject<RiotSummonerRequestModel>(contentAccount);
+                yield return initializedSummonerModel;
+            }           
         }
 
-       public static async Task InitializeBlizzardApi(string apiKey)
-        {
-
-        }
        
     }
 }
