@@ -10,6 +10,8 @@ namespace Lib.RiotGames.Core.Entities
         public string Puuid { get; set; }
         public string GameName { get; set; }
         public string TagName { get; set; }
+        public string SummonerId { get; set; }
+        public string AccountId { get; set; }
         public enum Region {europe, americas, asia}
     }
 }
